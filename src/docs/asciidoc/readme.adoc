@@ -1,0 +1,72 @@
+Purpose
+~~~~~~~
+
+Power and Thermal Microservice collect power monitoring and consumption on compute node using industry standard WS-Management - WSMAN Protocol.
+
+Power and Thermal monitoring for hardware resources in a datacenter environment is one of the major challenges for hardware administrator in converged and hyper converged environment. Administrators want to manage the power consumption by nodes or by rack.  
+Setting power capping on an individual node or set of nodes will ensure the power consumption is under control and monitored. 
+This Dell Server Power and Thermal Microservice will enable an administrator to monitor and manage power and thermal consumption by node or set of nodes within their racks.
+
+The microservice is available at dockerhub as a docker image to download and run.  
+
+How to Use
+~~~~~~~~~~
+
+A docker container for this service is available at: https://hub.docker.com/r/rackhd/dell-powerthermal-monitoring/
+
+....
+sudo docker run -p 0.0.0.0:46019:46019 --name dell-powerthermal-monitoring -d rackhd/dell-powerthermal-monitoring:latest
+....
+
+The service can also start up to bootstrap its configuration from consul. More information about registration with and using advanced configuration settings provided by a Consul K/V store can be found in the online help.
+
+Example Post
+++++++++++++
+
+POST - /api/1.0/server/powerthermal
+....
+{
+  "password": "string",
+  "serverAddress": "string",
+  "userName": "string"
+}
+....
+
+PUT - /api/1.0/server/powerthermal
+....
+
+{
+  "enableCapping": true,
+  "password": "string",
+  "powerCap": 0,
+  "serverAddress": "string",
+  "userName": "string"
+}
+....
+
+POST - /api/1.0/server/powerthermal/all
+....
+[
+  {
+    "password": "string",
+    "serverAddress": "string",
+    "userName": "string"
+  }
+]
+....
+
+PUT - /api/1.0/server/powerthermal/all
+....
+
+{
+  "enableCapping": true,
+  "powerCap": 0,
+  "servers": [
+    {
+      "password": "string",
+      "serverAddress": "string",
+      "userName": "string"
+    }
+  ]
+}
+....
